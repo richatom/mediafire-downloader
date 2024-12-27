@@ -122,31 +122,6 @@ def print_error(link: str):
 
 
 def main():
-    """
-    Mediafire Bulk Downloader
-
-    Parses command-line arguments to download files or folders from Mediafire.
-
-    Usage:
-        python mediafire.py <mediafire_url> [-o <output_path>] [-t <num_threads>]
-
-    Arguments:
-        mediafire_url (str): The URL of the file or folder to be downloaded from Mediafire.
-
-    Options:
-        -o, --output (str): The path of the desired output folder. Default is the current directory.
-        -t, --threads (int): Number of threads to use for downloading. Default is 10.
-
-    Returns:
-        None
-
-    Example:
-        To download a file:
-        $ python mediafire.py https://www.mediafire.com/file/example_file.txt
-
-        To download a folder:
-        $ python mediafire.py https://www.mediafire.com/folder/example_folder -o /path/to/output -t 20
-    """
     parser = ArgumentParser(
         "mediafire_bulk_downloader", usage="python mediafire.py <mediafire_url>"
     )
@@ -154,6 +129,7 @@ def main():
         "mediafire_url", help="The URL of the file or folder to be downloaded"
     )
     parser.add_argument(
+
         "-o",
         "--output",
         help="The path of the desired output folder",
@@ -221,40 +197,13 @@ def get_files_or_folders_api_endpoint(
 
 
 def get_info_endpoint(file_key: str) -> str:
-    """
-    Constructs the API endpoint URL for retrieving information about a specific file from Mediafire.
-
-    Parameters:
-        file_key (str): The unique identifier of the file.
-
-    Returns:
-        str: The constructed API endpoint URL.
-
-    Example:
-        >>> get_info_endpoint('file_key_123')
-        'https://www.mediafire.com/api/file/get_info.php?quick_key=file_key_123&response_format=json'
-    """
     return f"https://www.mediafire.com/api/file/get_info.php?quick_key={file_key}&response_format=json"
 
 
 def get_folders(
     folder_key: str, folder_name: str, threads_num: int, first: bool = False
 ) -> None:
-    """
-    Recursively downloads folders and files from Mediafire.
 
-    Parameters:
-        folder_key (str): The unique identifier of the folder.
-        folder_name (str): The name of the folder.
-        threads_num (int): Number of threads to use for downloading.
-        first (bool): If True, it's the first folder being processed. Default is False.
-
-    Returns:
-        None
-
-    Example:
-        >>> get_folders('folder_key_123', '/path/to/download', 5, first=True)
-    """
     if first:
         r = get(get_files_or_folders_api_endpoint("folder", folder_key, info=True))
         if r.status_code != 200:

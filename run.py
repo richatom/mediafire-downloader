@@ -1,27 +1,19 @@
-import platform
-import subprocess
-import pyperclip
 import os
-def run():
-    print('Paste mediafire link\n}')
-    linkInput = input('')
+import subprocess
 
-    print('Paste output folder\n')
-    outputInput = input('')
+def main():
+    downloadable_link = input("Enter the downloadable link: ")
 
-    argOutput = '-o ' + outputInput
+    output_file_path = input("Enter the output file path: ")
 
-    if platform == 'Windows':
-        subprocess.run('C:\Windows\System32\cmd.exe', shell=True)
-        pyperclip.copy('python mediafire.py' + ' '+ linkInput + ' ' + outputInput)
-        os.chdir('C:\Users\atom\Documents\GitHub/mediafire-downloader')
-        pyperclip.paste()
-    else:
-        exit
+    command = f"python mediafire.py {downloadable_link} -o {output_file_path}"
 
+    print(f"Running command: {command}")
+    try:
+        subprocess.run(command, shell=True, check=True)
+        print("Command executed successfully.")
+    except subprocess.CalledProcessError as e:
+        print(f"An error occurred while running the command: {e}")
 
 if __name__ == "__main__":
-    try:
-        run()
-    except KeyboardInterrupt:
-        exit(0)
+    main()

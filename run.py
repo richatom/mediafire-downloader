@@ -2,22 +2,21 @@ import platform
 import subprocess
 import pyperclip
 import os
+import time
 def run():
-    print('Paste mediafire link\n}')
+    print('Paste mediafire link:')
     linkInput = input('')
 
-    print('Paste output folder\n')
+    print('Paste output folder:')
     outputInput = input('')
 
     argOutput = '-o ' + outputInput
 
-    if platform == 'Windows':
-        subprocess.run('C:\Windows\System32\cmd.exe', shell=True)
-        pyperclip.copy('python mediafire.py' + ' '+ linkInput + ' ' + outputInput)
-        os.chdir('C:\Users\atom\Documents\GitHub/mediafire-downloader')
-        pyperclip.paste()
-    else:
-        exit
+    subprocess.run('C:\\Windows\\System32\\cmd.exe', shell=True)
+    os.chdir('Documents')
+    time.sleep(0.2)
+    pyperclip.copy('python mediafire.py' + ' '+ linkInput + ' ' + argOutput)
+    pyperclip.paste()
 
 
 if __name__ == "__main__":
